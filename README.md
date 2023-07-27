@@ -19,3 +19,11 @@ __Для работы установить библиотеки__
 ```
 pip install - r requirements.txt
 ```
+
+__Masterminds__
+<br/>
+__Вдохновители__
+
+[https://github.com/kevinzg/facebook-scraper](https://github.com/kevinzg/facebook-scraper)
+<br/>
+[https://github.com/adw0rd/instagrapi](https://github.com/adw0rd/instagrapi)

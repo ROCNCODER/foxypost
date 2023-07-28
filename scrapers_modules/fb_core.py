@@ -9,6 +9,7 @@ class FacebookAggregator():
         print(self._collection_links)
         for link in self._collection_links:
             post = next(get_posts(post_urls=[link]))
+            print(post)
             text = f"likes:{post['likes']} comments:{post['comments']} shares:{post['shares']}"
             col[link] = text
         return col

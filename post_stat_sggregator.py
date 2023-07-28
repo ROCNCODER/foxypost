@@ -14,10 +14,10 @@ class PostStatAggregator():
 
 
 if __name__ == "__main__":
-    # coll = ["https://www.facebook.com/photo/?fbid=602932055321115&set=a.106491591631833", "https://www.facebook.com/photo/?fbid=754509810013139&set=a.515626203901502"]
-    # parameter = "facebook"
-    # print(PostStatAggregator(collection_links=coll,parameter=parameter).get_data())
+    coll = ["https://www.facebook.com/photo/?fbid=602932055321115&set=a.106491591631833", "https://www.facebook.com/photo/?fbid=754509810013139&set=a.515626203901502"]
+    parameter = "facebook"
+    print(PostStatAggregator(collection_links=coll,parameter=parameter).get_data())
 
-    coll = ["https://www.instagram.com/p/Cumux1xqv1L","https://www.instagram.com/p/CvLOk51t-jF/?utm_source=ig_web_copy_link&igshid=MzRlODBiNWFlZA=="]
+    coll = ["https://www.instagram.com/reels/CvFRM5ArfXn/","https://www.instagram.com/p/Cumux1xqv1L","https://www.instagram.com/p/CvLOk51t-jF/?utm_source=ig_web_copy_link&igshid=MzRlODBiNWFlZA=="]
     parameter = "instagram"
     print(PostStatAggregator(collection_links=coll, parameter=parameter).get_data())

@@ -13,3 +13,4 @@ class FacebookAggregator():
             text = f"likes:{post['likes']} comments:{post['comments']} shares:{post['shares']}"
             col[link] = text
         return col
+

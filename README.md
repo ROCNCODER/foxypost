@@ -1,6 +1,6 @@
 
-![foxypost](/logo.jpg)
 # foxypost
+![foxypost](/logo.jpg)
 
 __The project is aimed at creating an abstraction over popular libraries for obtaining data from posts from various social media__ 
 <br/>

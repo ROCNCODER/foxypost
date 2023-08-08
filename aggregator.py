@@ -19,10 +19,6 @@ class PostStatAggregator():
 
 
 if __name__ == "__main__":
-    # coll = ["https://www.facebook.com/photo/?fbid=602932055321115&set=a.106491591631833", "https://www.facebook.com/photo/?fbid=754509810013139&set=a.515626203901502"]
-    # parameter = "facebook"
-    # print(PostStatAggregator(collection_links=coll,parameter=parameter).get_data())
-
     coll = "https://www.instagram.com/rocknrolla2025/saved/indac/18047862079466252/"
 
     PostStatAggregator(social_network="instagram",collection_link=coll, options=options).get_data()

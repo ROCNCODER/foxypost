@@ -21,4 +21,5 @@ class PostStatAggregator():
 if __name__ == "__main__":
     coll = "https://www.instagram.com/rocknrolla2025/saved/indac/18047862079466252/"
 
-    PostStatAggregator(social_network="instagram",collection_link=coll, options=options).get_data()
+    p = PostStatAggregator(social_network="instagram",collection_link=coll, options=options).get_data()
+    d = PostStatAggregator(social_network="instagram", collection_link=coll, options=options).get_data()

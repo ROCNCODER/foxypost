@@ -2,30 +2,30 @@ import time
 import json
 import os
 import logging
+import datetime
 
 from seleniumwire import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from seleniumwire.utils import decode
-import pandas as pd
+
 class InstagramAggregator():
-    dataframe = pd.DataFrame(columns=["link", "play_count", "comment_count", "like_count"])
+
     def __init__(self, username: str, password: str, link_coll: str):
         self._username = username
         self._password = password
         self._link_coll = link_coll
-        self._drive = ""
+        self._drive = []
+        self._data = []
 
-    @staticmethod
-    def my_response_interceptor(request, response):
+    def my_response_interceptor(self,request, response):
         if "https://www.instagram.com/api/v1/feed/collection" in request.url and "/posts/" in request.url:
             js = json.loads(decode(response.body, response.headers.get('Content-Encoding', 'identity')))
             data = js["items"]
             for i in data:
-                InstagramAggregator.dataframe.loc[len(InstagramAggregator.dataframe.index)] = [f"https://www.instagram.com/reels/{i['media']['code']}",
-                                                      f"{i['media']['play_count']}",
-                                                    f"{i['media']['comment_count']}",
-                                                     f"{i['media']['like_count']}"]
+                self._data.append({f"https://www.instagram.com/reels/{i['media']['code']}":{"play_count":f"{i['media']['play_count']}","comment_count":f"{i['media']['comment_count']}","like_count":f"{i['media']['like_count']}","date":f"{datetime.datetime.fromtimestamp(i['media']['taken_at']).strftime('%d.%m.%Y')}"}})
+
+
     def make_drive(self):
         options = webdriver.ChromeOptions()
         # options.headless = True
@@ -71,5 +71,5 @@ class InstagramAggregator():
         self._drive = self.make_drive()
         self.authorization()
         self.data_search()
-        print(self.dataframe)
-        return self.dataframe
+        logging.warning(self._data)
+        return self._data

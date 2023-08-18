@@ -2,7 +2,7 @@ from scrapers_modules.fb_core import FacebookAggregator
 from scrapers_modules.inst_core import InstagramAggregator
 from scrapers_modules.youtube_core import YouTubeAggregator
 
-options = {"instagram": {"usеrname": 'shapranov.work@gmail.com', "password": "15426378ShapDi"},"youtube":{"data"}}
+options = {"instagram": {"usеrname": '', "password": ""},"youtube":{"data"}}
 
 class PostStatAggregator():
     def __init__(self, social_network, collection_link: str | list, options: dict):

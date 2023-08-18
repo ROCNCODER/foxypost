@@ -12,7 +12,7 @@ logger.add("logs.log", format="{time} {level} {message} {name}", level="DEBUG")
 
 
 
-API_KEY = "AIzaSyDQ7UJO7azG6w6pRCrngIEZ30n4_jFyCDc"
+API_KEY = ""
 
 class YouTubeAggregator():
     api_service_name = 'youtube'

@@ -1,7 +1,7 @@
 import time
 import json
 import os
-import logging
+from loguru import logger
 import datetime
 
 from seleniumwire import webdriver
@@ -9,6 +9,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from seleniumwire.utils import decode
 
+
+logger.add("logs.log", format="{time} {level} {message} {name}", level="DEBUG")
 class InstagramAggregator():
 
     def __init__(self, username: str, password: str, link_coll: str):
@@ -28,14 +30,13 @@ class InstagramAggregator():
 
     def make_drive(self):
         options = webdriver.ChromeOptions()
-        # options.headless = True
+        options.headless = True
         options.add_argument("--disable-blink-features=AutomationControlled")
         driver = webdriver.Chrome(options=options)
         driver.response_interceptor = self.my_response_interceptor
         return driver
 
     def authorization(self):
-        logging.warning("Запуск")
         try:
             self._drive.get("https://www.instagram.com/")
             time.sleep(10)
@@ -51,7 +52,7 @@ class InstagramAggregator():
             ent.send_keys(Keys.ENTER)
             time.sleep(10)
         except Exception as f:
-            print(f"{f}")
+            logger.debug(f"Ошибка авторизации {f}")
 
     def data_search(self):
         self._drive.get(f"{self._link_coll}")
@@ -68,8 +69,8 @@ class InstagramAggregator():
         self._drive.quit()
 
     def get_data(self):
+
         self._drive = self.make_drive()
         self.authorization()
         self.data_search()
-        logging.warning(self._data)
         return self._data

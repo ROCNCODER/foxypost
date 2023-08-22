@@ -10,7 +10,7 @@ from selenium.webdriver.common.keys import Keys
 from seleniumwire.utils import decode
 
 
-logger.add("logs.log", format="{time} {level} {message} {name}", level="DEBUG")
+logger.add("logs.log", format="{time} {level} {message} {name}", level="ERROR")
 class InstagramAggregator():
 
     def __init__(self, username: str, password: str, link_coll: str):
@@ -32,7 +32,14 @@ class InstagramAggregator():
         options = webdriver.ChromeOptions()
         options.headless = True
         options.add_argument("--disable-blink-features=AutomationControlled")
-        driver = webdriver.Chrome(options=options)
+        options.add_argument('--disable-gpu')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-setuid-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        options.add_argument("--start-maximized")
+        options.add_argument("--window-size=1920,1080")
+
+        driver = webdriver.Chrome(options = options)
         driver.response_interceptor = self.my_response_interceptor
         return driver
 
@@ -69,8 +76,10 @@ class InstagramAggregator():
         self._drive.quit()
 
     def get_data(self):
-
-        self._drive = self.make_drive()
-        self.authorization()
-        self.data_search()
+        try:
+            self._drive = self.make_drive()
+            self.authorization()
+            self.data_search()
+        except Exception as f:
+            logger.error(f)
         return self._data

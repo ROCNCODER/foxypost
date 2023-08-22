@@ -1,18 +1,16 @@
-import os
 from loguru import logger
-import json
 from datetime import datetime
 
 import googleapiclient.discovery
 import googleapiclient.errors
 
 
-logger.add("logs.log", format="{time} {level} {message} {name}", level="DEBUG")
+logger.add("logs.log", format="{time} {level} {message} {name}", level="ERROR")
 
 
 
 
-API_KEY = ""
+API_KEY = "AIzaSyDQ7UJO7azG6w6pRCrngIEZ30n4_jFyCDc"
 
 class YouTubeAggregator():
     api_service_name = 'youtube'
@@ -40,8 +38,7 @@ class YouTubeAggregator():
 
 
     def data_cleaning(self):
-        self._links = [link.replace("https://www.youtube.com/shorts/","") for link in self._links]
-
+        self._links = [(link).replace("https://youtube.com/shorts/","").replace("https://www.youtube.com/shorts/","").replace("?feature=share4","").replace("?feature=share3","").replace("?feature=share","") for link in self._links]
 
     def get_parts(self):
         for i in range(0,len(self._links),50):
@@ -54,23 +51,23 @@ class YouTubeAggregator():
         )
         response = request.execute()
         return response
+
     def get_data(self):
-        try:
             self.data_cleaning()
             data = []
             for portion_id in self.get_parts():
                 self.string_conversion(portion_id)
                 resalt = self.start_request(portion_id)
                 resalt = resalt["items"]
-                resalt = [{f"https://www.youtube.com/shorts/{media['id']}":{"viewCount":media['statistics']['viewCount'],
-                                                                        "likeCount":media['statistics']['likeCount'],
-                                                                        "commentCount":media['statistics']['commentCount'],
-                                                                        "date":f"{self.date_formatting(media['snippet']['publishedAt'])}"}} for media in resalt]
+                try:
+                    resalt = [{f"https://www.youtube.com/shorts/{media['id']}":{"viewCount":media['statistics'].get('viewCount'),
+                                                                            "commentCount":media['statistics'].get('commentCount'),
+                                                                            "likeCount": media['statistics'].get('likeCount'),
+                                                                            "date":f"{self.date_formatting(media['snippet']['publishedAt'])}"}} for media in resalt]
+                except Exception as f:
+                    logger.error(f'{f} ')
                 data = data + resalt
-        except Exception as f:
-            logger.debug(f'{f} ')
-        return data
-
+            return data
 
 
 
